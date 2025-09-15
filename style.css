@@ -1,0 +1,369 @@
+/* Updated CSS - same as before but with end-video-text styling */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.story-section {
+    text-align: center;
+    padding: 40px 20px;
+    transition: all 0.5s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+.title {
+    font-size: 3em;
+    margin-bottom: 30px;
+    color: #ff6b6b;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,107,107,0.3); }
+    to { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255,107,107,0.6); }
+}
+
+.story-text {
+    font-size: 1.4em;
+    line-height: 1.6;
+    margin: 20px 0;
+    opacity: 0;
+    animation: fadeIn 1s ease-in forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+.phone-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.phone {
+    width: 250px;
+    height: 450px;
+    background: #2c2c54;
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.phone:hover {
+    transform: scale(1.05);
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+}
+
+.phone-header {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.photo-grid {
+    display: grid;
+    gap: 10px;
+}
+
+.photo-thumbnail {
+    width: 100%;
+    height: 150px;
+    background: #333;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.mystery-photo {
+    background: linear-gradient(45deg, #2c2c54, #40407a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-overlay {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+/* Video container styles - optimized for vertical video */
+.full-photo {
+    width: 400px;
+    height: 600px; /* Taller to accommodate vertical video */
+    margin: 20px auto;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+}
+
+.video-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+#sleepingVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* This will show the full video without cropping */
+    border-radius: 10px;
+    background: #000;
+    cursor: pointer;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.timestamp {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #ff6b6b;
+    font-size: 0.8em;
+    background: rgba(0,0,0,0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.video-indicator {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 0.8em;
+    color: #ff0000;
+    background: rgba(0,0,0,0.7);
+    padding: 5px 8px;
+    border-radius: 5px;
+    animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.3; }
+}
+
+.revelation {
+    color: #ff6b6b;
+    font-weight: bold;
+    animation: fadeIn 1s ease-in forwards 0.5s;
+    opacity: 0;
+}
+
+/* End video text that appears after video finishes */
+.end-video-text {
+    margin-top: 30px;
+    transition: all 0.5s ease;
+}
+
+.end-video-text.show {
+    animation: slideInFromBottom 1s ease-out forwards;
+}
+
+@keyframes slideInFromBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.emphasis {
+    font-size: 1.6em;
+    margin: 30px 0;
+    opacity: 1;
+}
+
+.clickable-word {
+    color: #ffd93d;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+}
+
+.clickable-word:hover {
+    color: #ff6b6b;
+    text-shadow: 0 0 10px rgba(255,107,107,0.5);
+}
+
+.instruction {
+    font-style: italic;
+    color: #a0a0a0;
+    font-size: 1.1em;
+    margin-top: 20px;
+}
+
+/* Final section styles */
+.darkness-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, transparent 60px, rgba(0,0,0,0.95) 200px);
+    pointer-events: none;
+    z-index: 10;
+    transition: all 0.1s ease;
+}
+
+.final-content {
+    position: relative;
+    z-index: 20;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.final-text {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.final {
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.horror-text {
+    color: #ff0000;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(255,0,0,0.7);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.final-instruction {
+    animation: fadeIn 1s ease-in forwards 2s;
+    opacity: 0;
+}
+
+/* Nosferatu styles */
+.nosferatu-container {
+    position: fixed;
+    bottom: -100px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    z-index: 5;
+    transition: all 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.nosferatu-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    filter: brightness(0.2) contrast(1.5) sepia(0.8) hue-rotate(200deg);
+    transition: all 0.3s ease;
+}
+
+.nosferatu-container.visible {
+    opacity: 0.8;
+    bottom: 20px;
+}
+
+.nosferatu-container.illuminated .nosferatu-image {
+    filter: brightness(1) contrast(1.2) sepia(0.3) hue-rotate(200deg);
+    box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
+    transform: scale(1.05);
+}
+
+.nosferatu-container.jump-scare {
+    animation: jumpScare 0.5s ease-out;
+}
+
+@keyframes jumpScare {
+    0% { 
+        transform: scale(1) translateY(0px);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: scale(1.3) translateY(-20px);
+        opacity: 1;
+    }
+    100% { 
+        transform: scale(1.1) translateY(-10px);
+        opacity: 0.9;
+    }
+}
+
+@keyframes backgroundShift {
+    0% { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+    50% { background: linear-gradient(135deg, #16213e 0%, #0f0f1e 100%); }
+    100% { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .title { font-size: 2em; }
+    .story-text { font-size: 1.2em; }
+    .phone { width: 200px; height: 360px; }
+    .full-photo { 
+        width: 300px; 
+        height: 450px; 
+    }
+    .nosferatu-container {
+        width: 200px;
+        height: 280px;
+        right: 10px;
+    }
+}

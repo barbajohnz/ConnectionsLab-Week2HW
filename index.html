@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Video - Interactive Horror Story</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="story-section" id="intro">
+            <h1 class="title">The Video</h1>
+            <p class="story-text">
+                You wake up in your apartment, sunlight streaming through the curtains. 
+                Everything seems normal until you check your phone...
+            </p>
+            <div class="phone-container">
+                <div class="phone" id="phone">
+                    <div class="phone-screen">
+                        <div class="phone-header">
+                            <span>Photos</span>
+                            <span>9:42 AM</span>
+                        </div>
+                        <div class="photo-grid">
+                            <div class="photo-thumbnail mystery-photo" id="mysteryPhoto">
+                                <div class="photo-overlay">
+                                    <span>Tap to view</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="instruction">Click on the video to view it...</p>
+        </div>
+
+        <div class="story-section hidden" id="videoReveal">
+            <div class="full-photo" id="fullPhoto">
+                <div class="video-container">
+                    <video id="sleepingVideo" controls>
+                        <source src="sleeping.MOV" type="video/mp4">
+                        <source src="sleeping.MOV" type="video/quicktime">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay">
+                        <div class="timestamp">Last night - 3:33 AM</div>
+                        <div class="video-indicator">📹 REC</div>
+                    </div>
+                </div>
+            </div>
+            <p class="story-text revelation">
+                There was a video on my phone of me sleeping.
+            </p>
+            
+            <!-- Text that appears after video ends -->
+            <div class="end-video-text hidden" id="endVideoText">
+                <p class="story-text emphasis">
+                    <span class="clickable-word" id="aloneWord">I live alone.</span>
+                </p>
+                <p class="instruction">Click on "I live alone" to continue...</p>
+            </div>
+        </div>
+
+        <div class="story-section hidden" id="finalReveal">
+            <div class="darkness-overlay" id="darknessOverlay"></div>
+            <div class="final-content">
+                <div class="final-text">
+                    <p class="story-text final">
+                        But if I live alone... 
+                        <span class="horror-text">who took the video?</span>
+                    </p>
+                    <p class="instruction final-instruction">
+                        Move your mouse around the screen to see what's lurking in the shadows...
+                    </p>
+                </div>
+                
+                <!-- Nosferatu hidden in the shadows -->
+                <div class="nosferatu-container" id="nosferatuContainer">
+                    <img src="nosferatu.jpg" alt="Nosferatu" class="nosferatu-image" id="nosferatuImage">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
