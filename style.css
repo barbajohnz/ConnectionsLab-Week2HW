@@ -1,36 +1,38 @@
-/* Updated CSS - same as before but with end-video-text styling */
-
+/* Basic reset - removes default browser spacing */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Main body styling */
 body {
     font-family: 'Georgia', serif;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     color: #e0e0e0;
     min-height: 100vh;
-    overflow-x: hidden;
 }
 
+/* Container for all content */
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    position: relative;
 }
 
+/* Basic page section styling */
 .story-section {
     text-align: center;
     padding: 40px 20px;
     transition: all 0.5s ease;
 }
 
+/* Hide elements class */
 .hidden {
     display: none;
 }
 
+/* Main title styling with glow effect */
 .title {
     font-size: 3em;
     margin-bottom: 30px;
@@ -39,11 +41,13 @@ body {
     animation: glow 2s ease-in-out infinite alternate;
 }
 
+/* Glow animation for title */
 @keyframes glow {
     from { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 10px rgba(255,107,107,0.3); }
     to { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px rgba(255,107,107,0.6); }
 }
 
+/* Story text styling */
 .story-text {
     font-size: 1.4em;
     line-height: 1.6;
@@ -52,16 +56,19 @@ body {
     animation: fadeIn 1s ease-in forwards;
 }
 
+/* Fade in animation */
 @keyframes fadeIn {
     to { opacity: 1; }
 }
 
+/* Phone container layout */
 .phone-container {
     display: flex;
     justify-content: center;
     margin: 40px 0;
 }
 
+/* Phone design */
 .phone {
     width: 250px;
     height: 450px;
@@ -73,19 +80,21 @@ body {
     transition: transform 0.3s ease;
 }
 
+/* Phone hover effect */
 .phone:hover {
     transform: scale(1.05);
 }
 
+/* Phone screen styling */
 .phone-screen {
     width: 100%;
     height: 100%;
     background: #000;
     border-radius: 15px;
     padding: 15px;
-    position: relative;
 }
 
+/* Phone header layout */
 .phone-header {
     display: flex;
     justify-content: space-between;
@@ -94,11 +103,13 @@ body {
     margin-bottom: 20px;
 }
 
+/* Photo grid container */
 .photo-grid {
     display: grid;
     gap: 10px;
 }
 
+/* Basic photo thumbnail styling */
 .photo-thumbnail {
     width: 100%;
     height: 150px;
@@ -109,6 +120,7 @@ body {
     cursor: pointer;
 }
 
+/* Mystery photo specific styling */
 .mystery-photo {
     background: linear-gradient(45deg, #2c2c54, #40407a);
     display: flex;
@@ -116,6 +128,7 @@ body {
     justify-content: center;
 }
 
+/* Photo overlay text */
 .photo-overlay {
     background: rgba(0,0,0,0.7);
     color: #fff;
@@ -124,10 +137,10 @@ body {
     font-size: 0.9em;
 }
 
-/* Video container styles - optimized for vertical video */
+/* Video container styling - sized for vertical video */
 .full-photo {
     width: 400px;
-    height: 600px; /* Taller to accommodate vertical video */
+    height: 600px;
     margin: 20px auto;
     background: #000;
     border-radius: 10px;
@@ -136,33 +149,34 @@ body {
     box-shadow: 0 15px 40px rgba(0,0,0,0.7);
 }
 
+/* Video wrapper */
 .video-container {
     width: 100%;
     height: 100%;
     position: relative;
-    overflow: hidden;
     border-radius: 10px;
 }
 
+/* Video element styling */
 #sleepingVideo {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* This will show the full video without cropping */
+    object-fit: contain; /* Shows full video without cropping */
     border-radius: 10px;
     background: #000;
-    cursor: pointer;
 }
 
+/* Video overlay container */
 .video-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 2;
+    pointer-events: none; /* Allows clicking through to video */
 }
 
+/* Timestamp styling */
 .timestamp {
     position: absolute;
     top: 15px;
@@ -174,6 +188,7 @@ body {
     border-radius: 5px;
 }
 
+/* Recording indicator */
 .video-indicator {
     position: absolute;
     top: 15px;
@@ -186,11 +201,13 @@ body {
     animation: blink 2s ease-in-out infinite;
 }
 
+/* Blinking animation for record indicator */
 @keyframes blink {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0.3; }
 }
 
+/* Revelation text styling */
 .revelation {
     color: #ff6b6b;
     font-weight: bold;
@@ -198,16 +215,18 @@ body {
     opacity: 0;
 }
 
-/* End video text that appears after video finishes */
+/* End video text container */
 .end-video-text {
     margin-top: 30px;
     transition: all 0.5s ease;
 }
 
+/* Show animation for end video text */
 .end-video-text.show {
     animation: slideInFromBottom 1s ease-out forwards;
 }
 
+/* Slide up animation */
 @keyframes slideInFromBottom {
     0% {
         opacity: 0;
@@ -219,12 +238,14 @@ body {
     }
 }
 
+/* Emphasis text styling */
 .emphasis {
     font-size: 1.6em;
     margin: 30px 0;
     opacity: 1;
 }
 
+/* Clickable word styling */
 .clickable-word {
     color: #ffd93d;
     cursor: pointer;
@@ -232,11 +253,13 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Clickable word hover effect */
 .clickable-word:hover {
     color: #ff6b6b;
     text-shadow: 0 0 10px rgba(255,107,107,0.5);
 }
 
+/* Instruction text styling */
 .instruction {
     font-style: italic;
     color: #a0a0a0;
@@ -244,7 +267,7 @@ body {
     margin-top: 20px;
 }
 
-/* Final section styles */
+/* Dark overlay for flashlight effect */
 .darkness-overlay {
     position: fixed;
     top: 0;
@@ -257,6 +280,7 @@ body {
     transition: all 0.1s ease;
 }
 
+/* Final content container */
 .final-content {
     position: relative;
     z-index: 20;
@@ -267,16 +291,19 @@ body {
     align-items: center;
 }
 
+/* Final text styling */
 .final-text {
     text-align: center;
     margin-bottom: 50px;
 }
 
+/* Final section text */
 .final {
     font-size: 1.8em;
     text-align: center;
 }
 
+/* Scary text with red glow */
 .horror-text {
     color: #ff0000;
     font-weight: bold;
@@ -284,17 +311,19 @@ body {
     animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* Pulse animation for horror text */
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.7; }
 }
 
+/* Final instruction animation */
 .final-instruction {
     animation: fadeIn 1s ease-in forwards 2s;
     opacity: 0;
 }
 
-/* Nosferatu styles */
+/* Nosferatu container */
 .nosferatu-container {
     position: fixed;
     bottom: -100px;
@@ -307,6 +336,7 @@ body {
     pointer-events: none;
 }
 
+/* Nosferatu image styling */
 .nosferatu-image {
     width: 100%;
     height: 100%;
@@ -316,21 +346,25 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Nosferatu visible state */
 .nosferatu-container.visible {
     opacity: 0.8;
     bottom: 20px;
 }
 
+/* Nosferatu illuminated state */
 .nosferatu-container.illuminated .nosferatu-image {
     filter: brightness(1) contrast(1.2) sepia(0.3) hue-rotate(200deg);
     box-shadow: 0 0 30px rgba(255, 107, 107, 0.6);
     transform: scale(1.05);
 }
 
+/* Jump scare animation */
 .nosferatu-container.jump-scare {
     animation: jumpScare 0.5s ease-out;
 }
 
+/* Jump scare keyframes */
 @keyframes jumpScare {
     0% { 
         transform: scale(1) translateY(0px);
@@ -344,12 +378,6 @@ body {
         transform: scale(1.1) translateY(-10px);
         opacity: 0.9;
     }
-}
-
-@keyframes backgroundShift {
-    0% { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
-    50% { background: linear-gradient(135deg, #16213e 0%, #0f0f1e 100%); }
-    100% { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
 }
 
 /* Mobile responsiveness */

@@ -1,225 +1,393 @@
-// Interactive Horror Story JavaScript - Fixed Video Flow
+/**
+ * Interactive Horror Story - Advanced JavaScript Implementation
+ * 
+ * This script handles multiple complex user interactions:
+ * 1. Phone click event to reveal video
+ * 2. Video end event detection to show additional text
+ * 3. Text click event to transition to final section
+ * 4. Advanced mouse tracking with flashlight effect and proximity detection
+ * 
+ * Uses modern JavaScript features including:
+ * - Event listeners and event delegation
+ * - DOM manipulation and element selection
+ * - CSS property manipulation via JavaScript
+ * - Mathematical calculations for distance and positioning
+ * - Animation timing and state management
+ * - Browser API integration (video events)
+ */
 
-console.log("Script is loading...");
-
+// Wait for DOM to be fully loaded before executing any code
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM loaded, starting script...");
+    console.log("DOM fully loaded - initializing horror story interactions");
     
-    // Get all the elements we need
-    const phone = document.getElementById('phone');
-    const mysteryPhoto = document.getElementById('mysteryPhoto');
-    const introSection = document.getElementById('intro');
-    const videoRevealSection = document.getElementById('videoReveal');
-    const finalRevealSection = document.getElementById('finalReveal');
-    const aloneWord = document.getElementById('aloneWord');
-    const sleepingVideo = document.getElementById('sleepingVideo');
-    const endVideoText = document.getElementById('endVideoText');
-    const nosferatuContainer = document.getElementById('nosferatuContainer');
-    const darknessOverlay = document.getElementById('darknessOverlay');
+    // ============================================================================
+    // ELEMENT SELECTION AND INITIALIZATION
+    // ============================================================================
     
-    console.log("Elements found:", {
-        phone: !!phone,
-        videoRevealSection: !!videoRevealSection,
-        sleepingVideo: !!sleepingVideo,
-        endVideoText: !!endVideoText
+    // Cache DOM elements for better performance - avoiding repeated queries
+    const elements = {
+        // Interactive elements
+        phone: document.getElementById('phone'),
+        mysteryPhoto: document.getElementById('mysteryPhoto'),
+        aloneWord: document.getElementById('aloneWord'),
+        sleepingVideo: document.getElementById('sleepingVideo'),
+        
+        // Section containers
+        introSection: document.getElementById('intro'),
+        videoRevealSection: document.getElementById('videoReveal'),
+        finalRevealSection: document.getElementById('finalReveal'),
+        endVideoText: document.getElementById('endVideoText'),
+        
+        // Final section elements
+        nosferatuContainer: document.getElementById('nosferatuContainer'),
+        darknessOverlay: document.getElementById('darknessOverlay')
+    };
+    
+    // Verify all critical elements exist
+    const criticalElements = ['phone', 'sleepingVideo', 'aloneWord', 'darknessOverlay'];
+    const missingElements = criticalElements.filter(key => !elements[key]);
+    
+    if (missingElements.length > 0) {
+        console.error("Critical elements missing:", missingElements);
+        return; // Exit if essential elements are not found
+    }
+    
+    console.log("All essential elements found and cached successfully");
+    
+    // ============================================================================
+    // INTERACTION 1: PHONE CLICK EVENT HANDLER
+    // ============================================================================
+    
+    /**
+     * Handles the initial phone click interaction
+     * Creates a scale animation effect and transitions to video reveal
+     */
+    elements.phone.addEventListener('click', function() {
+        console.log("Phone interaction initiated");
+        
+        // Visual feedback: scale down animation on click
+        this.style.transform = 'scale(0.95)';
+        
+        // Reset scale after brief animation delay
+        setTimeout(() => {
+            this.style.transform = 'scale(1)';
+        }, 150);
+        
+        // Transition to video section with delay for dramatic effect
+        setTimeout(() => {
+            // Hide current section and show video section
+            if (elements.introSection) elements.introSection.classList.add('hidden');
+            if (elements.videoRevealSection) elements.videoRevealSection.classList.remove('hidden');
+            
+            // Staggered text appearance for dramatic timing
+            setTimeout(() => {
+                const revelationText = document.querySelector('.revelation');
+                if (revelationText) {
+                    revelationText.style.opacity = '1';
+                    console.log("Revelation text displayed");
+                }
+            }, 500); // Half-second delay for revelation text
+            
+        }, 800); // Main transition delay
     });
     
-    // First interaction: Click on phone to reveal the video
-    if (phone) {
-        phone.addEventListener('click', function() {
-            console.log("Phone clicked!");
-            
-            // Add click effect
-            phone.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                phone.style.transform = 'scale(1)';
-            }, 150);
-            
-            // Transition to video reveal after a short delay
-            setTimeout(() => {
-                if (introSection) introSection.classList.add('hidden');
-                if (videoRevealSection) videoRevealSection.classList.remove('hidden');
-                
-                // Show revelation text
-                setTimeout(() => {
-                    const revelation = document.querySelector('.revelation');
-                    if (revelation) revelation.style.opacity = '1';
-                }, 500);
-                
-            }, 800);
-        });
-        
-        console.log("Phone click listener added successfully");
-    }
+    // ============================================================================
+    // INTERACTION 2: VIDEO EVENT HANDLING
+    // ============================================================================
     
-    // Handle video events
-    if (sleepingVideo) {
-        // Video loading events
-        sleepingVideo.addEventListener('loadeddata', function() {
-            console.log("Video loaded successfully");
+    /**
+     * Advanced video event handling with multiple event listeners
+     * Tracks video lifecycle and triggers story progression
+     */
+    if (elements.sleepingVideo) {
+        
+        // Video loading event handlers
+        elements.sleepingVideo.addEventListener('loadeddata', function() {
+            console.log("Video data loaded successfully - ready for playback");
         });
         
-        sleepingVideo.addEventListener('error', function(e) {
-            console.error("Video failed to load:", e);
+        elements.sleepingVideo.addEventListener('error', function(error) {
+            console.error("Video loading error encountered:", error);
+            // Could implement fallback behavior here
         });
         
-        // When video starts playing
-        sleepingVideo.addEventListener('play', function() {
-            console.log("Video started playing");
+        // Video playback event handlers
+        elements.sleepingVideo.addEventListener('play', function() {
+            console.log("Video playback started");
         });
         
-        sleepingVideo.addEventListener('pause', function() {
-            console.log("Video paused");
+        elements.sleepingVideo.addEventListener('pause', function() {
+            console.log("Video playback paused");
         });
         
-        // IMPORTANT: When video ends, show "I live alone" text
-        sleepingVideo.addEventListener('ended', function() {
-            console.log("Video ended - showing 'I live alone' text");
+        /**
+         * Critical event: Video end detection
+         * Triggers the appearance of "I live alone" text
+         */
+        elements.sleepingVideo.addEventListener('ended', function() {
+            console.log("Video playback completed - triggering next story element");
             
-            // Show the end video text with animation
-            if (endVideoText) {
-                endVideoText.classList.remove('hidden');
-                endVideoText.classList.add('show');
+            // Show the end video text with smooth animation
+            if (elements.endVideoText) {
+                elements.endVideoText.classList.remove('hidden');
+                elements.endVideoText.classList.add('show');
                 
-                // Setup the click listener for "alone" word after it appears
-                setupAloneWordListener();
+                // Initialize the "alone" word click handler after text appears
+                initializeAloneWordInteraction();
+                console.log("End video text displayed with animation");
             }
         });
-        
-        console.log("Video event listeners added successfully");
     }
     
-    // Function to setup the "alone" word click listener
-    function setupAloneWordListener() {
-        if (aloneWord && !aloneWord.hasAttribute('data-listener-added')) {
-            aloneWord.addEventListener('click', function() {
-                console.log("Alone word clicked!");
+    // ============================================================================
+    // INTERACTION 3: "ALONE" WORD CLICK HANDLER
+    // ============================================================================
+    
+    /**
+     * Initializes the "alone" word click interaction
+     * Separated into function to avoid duplicate event listeners
+     */
+    function initializeAloneWordInteraction() {
+        // Check if event listener already exists to prevent duplicates
+        if (elements.aloneWord && !elements.aloneWord.hasAttribute('data-listener-active')) {
+            
+            elements.aloneWord.addEventListener('click', function() {
+                console.log("'Alone' word clicked - transitioning to final horror sequence");
                 
-                // Add click effect
-                aloneWord.style.color = '#ff0000';
-                aloneWord.style.textShadow = '0 0 15px rgba(255,0,0,0.8)';
+                // Visual feedback: red color and glow effect
+                this.style.color = '#ff0000';
+                this.style.textShadow = '0 0 15px rgba(255,0,0,0.8)';
                 
                 // Pause video if still playing
-                if (sleepingVideo && !sleepingVideo.paused) {
-                    sleepingVideo.pause();
+                if (elements.sleepingVideo && !elements.sleepingVideo.paused) {
+                    elements.sleepingVideo.pause();
+                    console.log("Video paused for final transition");
                 }
                 
-                // Transition to final reveal
+                // Transition to final scary section
                 setTimeout(() => {
-                    if (videoRevealSection) videoRevealSection.classList.add('hidden');
-                    if (finalRevealSection) finalRevealSection.classList.remove('hidden');
+                    if (elements.videoRevealSection) elements.videoRevealSection.classList.add('hidden');
+                    if (elements.finalRevealSection) elements.finalRevealSection.classList.remove('hidden');
                     
-                    // Start the final horror sequence
+                    // Initialize advanced mouse interaction system after delay
                     setTimeout(() => {
-                        enableMouseInteraction();
-                    }, 2000);
+                        initializeAdvancedMouseInteraction();
+                    }, 2000); // 2-second delay for suspense building
+                    
                 }, 500);
             });
             
-            // Mark that listener has been added to prevent duplicates
-            aloneWord.setAttribute('data-listener-added', 'true');
-            console.log("Alone word click listener added successfully");
+            // Mark listener as active to prevent duplicate additions
+            elements.aloneWord.setAttribute('data-listener-active', 'true');
+            console.log("Alone word interaction initialized");
         }
     }
     
-    // Mouse interaction for final section with Nosferatu
-    function enableMouseInteraction() {
-        console.log("Mouse interaction enabled!");
-        let mouseMovementCount = 0;
-        let nosferatuRevealed = false;
+    // ============================================================================
+    // INTERACTION 4: ADVANCED MOUSE TRACKING AND FLASHLIGHT SYSTEM
+    // ============================================================================
+    
+    /**
+     * Advanced mouse interaction system featuring:
+     * - Real-time mouse position tracking
+     * - Dynamic CSS gradient manipulation
+     * - Proximity detection algorithms
+     * - State management for progressive revelation
+     * - Performance optimized event handling
+     */
+    function initializeAdvancedMouseInteraction() {
+        console.log("Initializing advanced mouse tracking system");
+        
+        // State management variables
+        let mouseMovementCounter = 0;
+        let nosferatuRevealState = false;
         let jumpScareTriggered = false;
         
-        document.addEventListener('mousemove', function(e) {
-            mouseMovementCount++;
+        // Performance optimization: throttle mouse events
+        let lastUpdateTime = 0;
+        const updateThrottle = 16; // ~60fps update rate
+        
+        /**
+         * Main mouse movement event handler
+         * Uses requestAnimationFrame for smooth performance
+         */
+        document.addEventListener('mousemove', function(event) {
+            const currentTime = performance.now();
             
-            // Calculate mouse position relative to viewport
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
+            // Throttle updates for better performance
+            if (currentTime - lastUpdateTime < updateThrottle) return;
+            lastUpdateTime = currentTime;
             
-            // Update darkness overlay to follow mouse (flashlight effect)
-            if (darknessOverlay) {
-                darknessOverlay.style.background = 
-                    `radial-gradient(circle at ${mouseX}px ${mouseY}px, 
-                    transparent 80px, 
+            mouseMovementCounter++;
+            
+            // Extract mouse coordinates from event object
+            const mouseCoordinates = {
+                x: event.clientX,
+                y: event.clientY
+            };
+            
+            // ====================================================================
+            // DYNAMIC FLASHLIGHT EFFECT GENERATION
+            // ====================================================================
+            
+            /**
+             * Creates a radial gradient that follows the mouse cursor
+             * Uses multiple color stops for realistic flashlight beam effect
+             */
+            if (elements.darknessOverlay) {
+                const flashlightGradient = `radial-gradient(circle at ${mouseCoordinates.x}px ${mouseCoordinates.y}px, 
+                    transparent 60px, 
+                    rgba(0,0,0,0.3) 100px, 
                     rgba(0,0,0,0.8) 150px, 
-                    rgba(0,0,0,0.98) 300px)`;
+                    rgba(0,0,0,0.95) 200px, 
+                    black 300px)`;
+                
+                elements.darknessOverlay.style.background = flashlightGradient;
             }
             
-            // After some mouse movement, start revealing Nosferatu
-            if (mouseMovementCount > 15 && !nosferatuRevealed) {
-                if (nosferatuContainer) {
-                    nosferatuContainer.classList.add('visible');
-                    nosferatuRevealed = true;
-                    console.log("Nosferatu revealed!");
+            // ====================================================================
+            // PROGRESSIVE NOSFERATU REVELATION SYSTEM
+            // ====================================================================
+            
+            /**
+             * Reveals Nosferatu after sufficient mouse movement
+             * Implements progressive disclosure for maximum suspense
+             */
+            if (mouseMovementCounter > 15 && !nosferatuRevealState) {
+                if (elements.nosferatuContainer) {
+                    elements.nosferatuContainer.classList.add('visible');
+                    nosferatuRevealState = true;
+                    console.log("Nosferatu revealed - proximity detection now active");
                 }
             }
             
-            // Check if mouse is near Nosferatu to illuminate him
-            if (nosferatuRevealed && nosferatuContainer) {
-                const nosferatuRect = nosferatuContainer.getBoundingClientRect();
-                const nosferatuCenterX = nosferatuRect.left + nosferatuRect.width / 2;
-                const nosferatuCenterY = nosferatuRect.top + nosferatuRect.height / 2;
+            // ====================================================================
+            // PROXIMITY DETECTION AND ILLUMINATION SYSTEM
+            // ====================================================================
+            
+            /**
+             * Advanced proximity detection using Euclidean distance calculation
+             * Triggers illumination effects when flashlight approaches Nosferatu
+             */
+            if (nosferatuRevealState && elements.nosferatuContainer) {
                 
-                const distance = Math.sqrt(
-                    Math.pow(mouseX - nosferatuCenterX, 2) + 
-                    Math.pow(mouseY - nosferatuCenterY, 2)
+                // Get Nosferatu's current screen position
+                const nosferatuBoundingRect = elements.nosferatuContainer.getBoundingClientRect();
+                const nosferatuCenter = {
+                    x: nosferatuBoundingRect.left + (nosferatuBoundingRect.width / 2),
+                    y: nosferatuBoundingRect.top + (nosferatuBoundingRect.height / 2)
+                };
+                
+                // Calculate Euclidean distance between mouse and Nosferatu center
+                const distanceToNosferatu = Math.sqrt(
+                    Math.pow(mouseCoordinates.x - nosferatuCenter.x, 2) + 
+                    Math.pow(mouseCoordinates.y - nosferatuCenter.y, 2)
                 );
                 
-                // If flashlight is close to Nosferatu, illuminate him
-                if (distance < 120) {
-                    nosferatuContainer.classList.add('illuminated');
-                    document.body.style.cursor = 'none';
+                // Proximity threshold for illumination effect
+                const illuminationThreshold = 120;
+                
+                if (distanceToNosferatu < illuminationThreshold) {
+                    // ============================================================
+                    // ILLUMINATION STATE ACTIVATION
+                    // ============================================================
                     
-                    // Trigger jump scare effect once when first illuminated
+                    elements.nosferatuContainer.classList.add('illuminated');
+                    document.body.style.cursor = 'none'; // Hide cursor for immersion
+                    
+                    // One-time jump scare trigger
                     if (!jumpScareTriggered) {
-                        nosferatuContainer.classList.add('jump-scare');
+                        elements.nosferatuContainer.classList.add('jump-scare');
                         jumpScareTriggered = true;
                         
-                        // Remove jump scare class after animation
-                        setTimeout(() => {
-                            nosferatuContainer.classList.remove('jump-scare');
-                        }, 500);
+                        console.log("Jump scare sequence activated!");
                         
-                        console.log("Jump scare triggered!");
+                        // Remove jump scare class after animation completes
+                        setTimeout(() => {
+                            elements.nosferatuContainer.classList.remove('jump-scare');
+                        }, 500);
                     }
                     
-                    // Make Nosferatu subtly follow the mouse when illuminated
-                    const offsetX = (mouseX - centerX) * 0.02;
-                    const offsetY = (mouseY - centerY) * 0.01;
+                    // ============================================================
+                    // DYNAMIC FOLLOWING BEHAVIOR
+                    // ============================================================
                     
-                    nosferatuContainer.style.transform = 
-                        `translate(${offsetX}px, ${offsetY}px)`;
+                    /**
+                     * Makes Nosferatu subtly track mouse movement when illuminated
+                     * Creates unsettling "watching" effect
+                     */
+                    const followIntensity = 0.02; // Subtle movement multiplier
+                    const screenCenter = {
+                        x: window.innerWidth / 2,
+                        y: window.innerHeight / 2
+                    };
+                    
+                    const followOffset = {
+                        x: (mouseCoordinates.x - screenCenter.x) * followIntensity,
+                        y: (mouseCoordinates.y - screenCenter.y) * followIntensity
+                    };
+                    
+                    elements.nosferatuContainer.style.transform = 
+                        `translate(${followOffset.x}px, ${followOffset.y}px)`;
                         
                 } else {
-                    nosferatuContainer.classList.remove('illuminated');
-                    document.body.style.cursor = 'default';
-                    nosferatuContainer.style.transform = 'translate(0px, 0px)';
+                    // ============================================================
+                    // ILLUMINATION STATE DEACTIVATION
+                    // ============================================================
+                    
+                    elements.nosferatuContainer.classList.remove('illuminated');
+                    document.body.style.cursor = 'default'; // Restore cursor
+                    elements.nosferatuContainer.style.transform = 'translate(0px, 0px)';
                 }
             }
         });
+        
+        console.log("Advanced mouse tracking system fully initialized");
     }
     
-    // Add hover effects for better interactivity
-    if (mysteryPhoto) {
-        mysteryPhoto.addEventListener('mouseenter', function() {
+    // ============================================================================
+    // ENHANCED USER EXPERIENCE FEATURES
+    // ============================================================================
+    
+    /**
+     * Additional hover effects for improved user feedback
+     * Provides visual cues for interactive elements
+     */
+    
+    // Phone photo hover effects
+    if (elements.mysteryPhoto) {
+        elements.mysteryPhoto.addEventListener('mouseenter', function() {
             this.style.transform = 'scale(1.05)';
             this.style.boxShadow = '0 5px 15px rgba(255,107,107,0.3)';
         });
         
-        mysteryPhoto.addEventListener('mouseleave', function() {
+        elements.mysteryPhoto.addEventListener('mouseleave', function() {
             this.style.transform = 'scale(1)';
             this.style.boxShadow = 'none';
         });
     }
     
-    // Add ambient effects
+    // ============================================================================
+    // AMBIENT BACKGROUND EFFECTS
+    // ============================================================================
+    
+    /**
+     * Delayed ambient background animation activation
+     * Adds subtle atmospheric enhancement
+     */
     setTimeout(() => {
         document.body.style.animation = 'backgroundShift 10s ease-in-out infinite alternate';
+        console.log("Ambient background effects activated");
     }, 3000);
     
-    console.log("All event listeners added successfully!");
+    // ============================================================================
+    // INITIALIZATION COMPLETE
+    // ============================================================================
+    
+    console.log("Interactive horror story fully initialized - all systems ready");
 });
 
-console.log("Script loaded completely");
+/**
+ * Additional utility functions and error handling could be added here
+ * This modular structure allows for easy expansion and maintenance
+ */
