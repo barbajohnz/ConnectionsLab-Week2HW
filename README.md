@@ -1,0 +1,1 @@
+This was my week 2 assignment I chose the prompt "There was a picture on my phone of me sleeping. I live alone." changed it from Photo-> to video because i used an acutal video of myself sleepign that my friend took once
